@@ -40,4 +40,9 @@ public class BookBorrowedEvent implements IEvent {
     public void setQuantity(int quantity){
         _quantity = quantity;
     }
+
+    @Override
+    public String getName() {
+        return Name;
+    }
 }

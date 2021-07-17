@@ -7,6 +7,7 @@ import openUni.Books.Book;
 import openUni.Books.BookLoan;
 import openUni.Books.Commands.BorrowBookCommand;
 import openUni.Books.Events.BookBorrowedEvent;
+import openUni.Events.EventPublisher;
 import openUni.FakeEventListener;
 import openUni.Users.User;
 import openUni.InMemoryRepository;
@@ -34,7 +35,7 @@ public class LoanBookTests {
         _borrowBookCommand = new BorrowBookCommand(_userRepository, _bookRepository, 
                 _bookLoanRepository);
         
-        _borrowBookCommand.subscribe(BookBorrowedEvent.Name, _listener);
+        EventPublisher.getInstance().subscribe(BookBorrowedEvent.Name, _listener);
         _loanBookPresenter = new LoanBookPresenter(_borrowBookCommand);
     }
     

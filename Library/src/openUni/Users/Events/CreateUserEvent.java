@@ -15,4 +15,9 @@ public class CreateUserEvent implements IEvent
     public User getUser(){
         return _user;
     }
+
+    @Override
+    public String getName() {
+        return Name;
+    }
 }

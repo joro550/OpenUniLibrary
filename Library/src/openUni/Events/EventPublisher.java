@@ -2,9 +2,16 @@ package openUni.Events;
 
 public class EventPublisher {
     private final EventManager _eventManager;
+    private static EventPublisher _instance;
     
-    protected EventPublisher(EventManager eventManager) {
-        _eventManager = eventManager;
+    private  EventPublisher() {
+        _eventManager = new EventManager();
+    }
+    
+    public static EventPublisher getInstance(){
+        if(_instance == null)
+            _instance = new EventPublisher();
+        return _instance;
     }
     
     /**
@@ -22,7 +29,16 @@ public class EventPublisher {
      * @param eventName The name of the event
      * @param eventToPublish The event with data
      */
-    protected void notify(String eventName, IEvent eventToPublish) {
+    public void notify(String eventName, IEvent eventToPublish) {
         _eventManager.notify(eventName, eventToPublish);
     }
+    
+    /**
+     * Notify all of the subscribers of an event in the system
+     * @param eventToPublish The event with data
+     */
+    public void notify(IEvent eventToPublish) {
+        _eventManager.notify(eventToPublish.getName(), eventToPublish);
+    }
+    
 }

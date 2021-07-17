@@ -2,6 +2,7 @@ package openUni.CreateUser;
 import java.util.ArrayList;
 import openUni.ui.CreateUsers.CreateUserPresenter;
 import openUni.*;
+import openUni.Events.EventPublisher;
 import openUni.Users.*;
 import openUni.Users.Commands.CreateUserCommand;
 import openUni.Users.Events.*;
@@ -18,11 +19,11 @@ public class CreateUserPresenterTest {
     @Before
     public void setUp() {
         _repository = new InMemoryRepository<>();
-        _userStore = new CreateUserCommand(_repository);
+        _userStore = new CreateUserCommand();
         _listener = new FakeEventListener<>();
         _presenter = new CreateUserPresenter(_userStore);
         
-        _userStore.subscribe(CreateUserEvent.Name, _listener);
+        EventPublisher.getInstance().subscribe(CreateUserEvent.Name, _listener);
     }
 
     @Test

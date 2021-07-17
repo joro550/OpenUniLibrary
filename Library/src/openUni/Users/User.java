@@ -1,13 +1,15 @@
 package openUni.Users;
 
+import openUni.Events.EventPublisher;
 import openUni.Persistence.PersistedObject;
+import openUni.Users.Events.CreateUserEvent;
 
 public class User extends PersistedObject {
     
     private String _firstName;
     private String _lastName;
     private String _email;
-    private AddressInformation _addressInformation;
+    private AddressInformation _addressInformation;    
             
     public String getFirstName(){
         return _firstName;
@@ -39,5 +41,9 @@ public class User extends PersistedObject {
     
     public void setAddress(AddressInformation address){
         _addressInformation = address;
+    }
+    
+    public void save(){
+        EventPublisher.getInstance().notify(new CreateUserEvent(this));
     }
 }

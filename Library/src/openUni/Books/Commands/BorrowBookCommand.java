@@ -1,16 +1,13 @@
 package openUni.Books.Commands;
 
 import openUni.Books.Book;
-import openUni.Books.BookLoan;
-import openUni.Books.Events.BookBorrowedEvent;
-import openUni.Books.Specifications.BookIsInStockSpecification;
-import openUni.Events.EventManager;
-import openUni.Events.EventPublisher;
-import openUni.Persistence.IRepository;
-import openUni.Users.Specifications.BookBorrowLimitSpecification;
 import openUni.Users.User;
+import openUni.Books.BookLoan;
+import openUni.Persistence.IRepository;
+import openUni.Books.Specifications.BookIsInStockSpecification;
+import openUni.Users.Specifications.BookBorrowLimitSpecification;
 
-public class BorrowBookCommand extends EventPublisher {
+public class BorrowBookCommand {
     IRepository<User> _userRepository;
     IRepository<Book> _bookRepository;
     IRepository<BookLoan> _bookLoanRepository;
@@ -18,7 +15,6 @@ public class BorrowBookCommand extends EventPublisher {
     public BorrowBookCommand(IRepository<User> userRepo, 
             IRepository<Book> bookRepo, 
             IRepository<BookLoan> bookLoanRepo) {
-        super(new EventManager(BookBorrowedEvent.Name));
 
         _userRepository = userRepo;
         _bookRepository = bookRepo;
@@ -69,8 +65,8 @@ public class BorrowBookCommand extends EventPublisher {
         if(!inStock.execute())
             return false;
         
-        // Notify all subscribers of the book being borrowed by the user
-        notify(BookBorrowedEvent.Name, new BookBorrowedEvent(user, book));
+        // loan book to user
+        book.loanBook(user);
         return true;
     }
 }

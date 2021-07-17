@@ -1,17 +1,10 @@
 package openUni.Users.Commands;
 
-import openUni.Events.EventManager;
-import openUni.Events.EventPublisher;
-import openUni.Persistence.IRepository;
 import openUni.Users.AddressInformation;
-import openUni.Users.Events.CreateUserEvent;
 import openUni.Users.Specifications.ValidUserSpecification;
 import openUni.Users.User;
 
-public class CreateUserCommand extends EventPublisher {
-    public CreateUserCommand(IRepository<User> userRepo){
-        super(new EventManager(CreateUserEvent.Name));
-    }
+public class CreateUserCommand {
 
     /**
      * Creates a user and verifies that the information is valid
@@ -37,7 +30,7 @@ public class CreateUserCommand extends EventPublisher {
         if(specification.execute()){
             
             // Notify all subscribers that a user has been created
-            notify(CreateUserEvent.Name, new CreateUserEvent(user));
+            user.save();
             return true;
         }
         

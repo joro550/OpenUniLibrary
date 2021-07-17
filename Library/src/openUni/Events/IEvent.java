@@ -6,4 +6,6 @@
 package openUni.Events;
 
 public interface IEvent {
+    
+    String getName();
 }

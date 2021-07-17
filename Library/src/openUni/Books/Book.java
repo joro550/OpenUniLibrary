@@ -1,6 +1,9 @@
 package openUni.Books;
 
+import openUni.Books.Events.BookBorrowedEvent;
+import openUni.Events.EventPublisher;
 import openUni.Persistence.PersistedObject;
+import openUni.Users.User;
 
 public class Book extends PersistedObject {
     private String _title;
@@ -38,5 +41,9 @@ public class Book extends PersistedObject {
     
     public void setQuantity(int quantity){
         _quantity = quantity;
+    }
+    
+    public void loanBook(User user){
+        EventPublisher.getInstance().notify(new BookBorrowedEvent(user, this));
     }
 }
