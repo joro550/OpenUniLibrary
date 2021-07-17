@@ -27,6 +27,15 @@ public class EventManager {
     }
     
     /**
+     * Notify all subscribers of event being sent
+     * @param eventType the event to be sent
+     */
+    public void notify(IEvent eventType) {
+        List<IEventListener> listeners = _listeners.get(eventType.getName());
+        listeners.forEach((listener) -> listener.update(eventType));
+    }
+    
+    /**
      * Add listener to be notified when event is sent
      * @param <T> the type of event
      * @param eventName the name of the event

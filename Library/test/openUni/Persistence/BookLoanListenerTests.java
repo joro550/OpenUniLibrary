@@ -33,8 +33,7 @@ public class BookLoanListenerTests {
         User user = new User();
         user.setId(2);
         
-        BookBorrowedEvent borrowedEvent = new BookBorrowedEvent(user, book);
-        _manager.notify(BookBorrowedEvent.Name, borrowedEvent);
+        _manager.notify(new BookBorrowedEvent(user, book));
         
         BookLoan loanFromStore = _persistence.get(1);
         Assert.assertEquals(user.getId(), loanFromStore.getUserId());

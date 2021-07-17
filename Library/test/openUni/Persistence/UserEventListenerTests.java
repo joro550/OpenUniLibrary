@@ -26,7 +26,7 @@ public class UserEventListenerTests {
     @Test
     public void saveUserTest(){
         User user = new User();
-        _manager.notify(CreateUserEvent.Name, new CreateUserEvent(user));
+        _manager.notify(new CreateUserEvent(user));
         
         User userFromStore = _persistence.get(1);
         Assert.assertEquals(user.getEmail(), userFromStore.getEmail());

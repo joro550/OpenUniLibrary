@@ -34,8 +34,7 @@ public class BookStockListenerTests {
         User user = new User();
         user.setId(2);
         
-        BookBorrowedEvent borrowedEvent = new BookBorrowedEvent(user, book);
-        _manager.notify(BookBorrowedEvent.Name, borrowedEvent);
+        _manager.notify(new BookBorrowedEvent(user, book));
         
         Book bookFromStore = _persistence.get(book.getId());
         Assert.assertEquals(99, bookFromStore.getQuantity() );
@@ -54,7 +53,7 @@ public class BookStockListenerTests {
         BookBorrowedEvent borrowedEvent = new BookBorrowedEvent(user, book);
         borrowedEvent.setQuantity(100);
         
-        _manager.notify(BookBorrowedEvent.Name, borrowedEvent);
+        _manager.notify(borrowedEvent);
         
         Book bookFromStore = _persistence.get(book.getId());
         Assert.assertEquals(0, bookFromStore.getQuantity() );

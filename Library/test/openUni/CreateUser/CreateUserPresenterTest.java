@@ -19,7 +19,7 @@ public class CreateUserPresenterTest {
     @Before
     public void setUp() {
         _repository = new InMemoryRepository<>();
-        _userStore = new CreateUserCommand();
+        _userStore = new CreateUserCommand(_repository);
         _listener = new FakeEventListener<>();
         _presenter = new CreateUserPresenter(_userStore);
         
@@ -31,6 +31,17 @@ public class CreateUserPresenterTest {
         _presenter.createUser("user@email.com", "John", "Doe", new AddressInformation());
         ArrayList<CreateUserEvent> eventsCaptured = _listener.getEventsCaptured();
         Assert.assertNotNull(eventsCaptured.get(0));
+    }
+    
+    @Test
+    public void whenEmailExists_NoEventIsFired(){
+        User user = new User();
+        user.setEmail("john@doe.com");
+        _repository.save(user);
+        
+        
+        _presenter.createUser("john@doe.com", "John", "Doe", new AddressInformation());
+        Assert.assertTrue(_listener.getEventsCaptured().isEmpty());
     }
     
     @Test
